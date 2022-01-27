@@ -4,12 +4,12 @@ const path = require('path');
 const port = process.env.PORT || 8080;
 
 
-http.createServer(function (request, response) {
+http.createServer(function(request, response) {
     console.log('request starting...');
 
-    var filePath = 'src' + request.url;
-    if (filePath == 'src/')
-        filePath = 'src/index.html';
+    var filePath = 'docs' + request.url;
+    if (filePath == 'docs/')
+        filePath = 'docs/index.html';
 
     var extname = path.extname(filePath);
     var contentType = 'text/html';
@@ -25,7 +25,7 @@ http.createServer(function (request, response) {
             break;
         case '.png':
             contentType = 'image/png';
-            break;      
+            break;
         case '.jpg':
             contentType = 'image/jpg';
             break;
@@ -36,7 +36,7 @@ http.createServer(function (request, response) {
 
     fs.readFile(filePath, function(error, content) {
         if (error) {
-            if(error.code == 'ENOENT'){
+            if (error.code == 'ENOENT') {
                 fs.readFile('./404.html', function(error, content) {
                     response.writeHead(200, { 'Content-Type': contentType });
                     response.end(content, 'utf-8');
@@ -44,8 +44,8 @@ http.createServer(function (request, response) {
             }
             else {
                 response.writeHead(500);
-                response.end('Sorry, check with the site admin for error: '+error.code+' ..\n');
-                response.end(); 
+                response.end('Sorry, check with the site admin for error: ' + error.code + ' ..\n');
+                response.end();
             }
         }
         else {
